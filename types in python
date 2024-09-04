@@ -1,0 +1,28 @@
+import sys
+
+def memory_usage_report(customer_data):
+    print("Memory Usage Report:")
+    for key, value in customer_data.items():
+        print(f"{key}: {sys.getsizeof(value)} bytes")
+
+# Sample customer data
+customer_data = {
+    "Customer ID": 123456789,  # Integer
+    "Customer Name": "John Doe",  # String
+    "Purchase History": [(101, "2023-01-01"), (102, "2023-02-01")],  # List of tuples
+    "Preferences": {"electronics", "books", "clothing"}  # Set
+}
+
+# Generate memory usage report
+memory_usage_report(customer_data)
+
+# Example of varying data types for comparison
+alternative_data = {
+    "Customer ID": "123456789",  # String instead of integer
+    "Customer Name": ("John", "Doe"),  # Tuple instead of string
+    "Purchase History": [(101, "2023-01-01"), (102, "2023-02-01")],  # Same as original
+    "Preferences": ["electronics", "books", "clothing"]  # List instead of set
+}
+
+print("\nAlternative Data Structure Memory Usage:")
+memory_usage_report(alternative_data)

@@ -1,0 +1,64 @@
+import timeit
+
+# Generate sample product data
+products_list = [(i, f"Product_{i}") for i in range(100000)]
+products_tuple = tuple(products_list)
+
+# Define operations to test
+
+
+# Appending (only applicable to list)
+def append_to_list():
+    temp_list = products_list[:]
+    temp_list.append((100001, "New_Product"))
+
+
+# Accessing elements
+def access_from_list():
+    return products_list[50000][1]
+
+
+def access_from_tuple():
+    return products_tuple[50000][1]
+
+
+# Looping through elements
+def loop_list():
+    for product in products_list:
+        pass
+
+
+def loop_tuple():
+    for product in products_tuple:
+        pass
+
+
+# Test immutability with exceptions
+def modify_list():
+    try:
+        temp_list = products_list[:]
+        temp_list[0] = (99999, "Modified_Product")
+        print("List modified successfully.")
+    except Exception as e:
+        print(f"Error modifying list: {e}")
+
+
+def modify_tuple():
+    try:
+        temp_tuple = products_tuple
+        temp_tuple[0] = (99999, "Modified_Product")  # This will raise an error
+        print("Tuple modified successfully.")
+    except TypeError as e:
+        print(f"Error modifying tuple: {e}")
+
+
+# Measure and compare performance
+print("Looping through List:", timeit.timeit(loop_list, number=1000))
+print("Looping through Tuple:", timeit.timeit(loop_tuple, number=1000))
+print("Appending to List:", timeit.timeit(append_to_list, number=1000))
+print("Accessing from List:", timeit.timeit(access_from_list, number=1000))
+print("Accessing from Tuple:", timeit.timeit(access_from_tuple, number=1000))
+
+# Immutability test with exception handling
+modify_list()
+modify_tuple()

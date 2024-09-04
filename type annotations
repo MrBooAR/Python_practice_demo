@@ -1,0 +1,60 @@
+from typing import List, Dict, Tuple, Optional, TypeVar
+
+
+# Basic type annotations
+def add_numbers(a: int, b: int) -> int:
+    return a + b
+
+
+def greet(name: str) -> str:
+    return f"Hello, {name}!"
+
+
+# Type annotations with complex data types
+def get_max_of_list(numbers: List[int]) -> int:
+    return max(numbers)
+
+
+def count_frequencies(items: List[str]) -> Dict[str, int]:
+    frequencies = {}
+    for item in items:
+        if item in frequencies:
+            frequencies[item] += 1
+        else:
+            frequencies[item] = 1
+    return frequencies
+
+
+# Function using generics
+T = TypeVar("T")
+
+
+def get_first_item(items: List[T]) -> Optional[T]:
+    if items:
+        return items[0]
+    return None
+
+
+# Function returning multiple types using Tuple
+def get_user_info(user_id: int) -> Tuple[str, int, str]:
+    # Imagine fetching user data from a database
+    return ("Alice", 30, "alice@example.com")
+
+
+# Test basic type annotations
+print(add_numbers(10, 5))  
+print(greet("Bob")) 
+
+# Test complex data types
+print(get_max_of_list([1, 2, 3, 4, 5]))  
+print(
+    count_frequencies(["apple", "banana", "apple"])
+)  
+
+# Test generics function
+print(get_first_item([10, 20, 30]))  
+print(get_first_item(["a", "b", "c"]))  
+print(get_first_item([]))  
+
+# Test function returning multiple types
+print(get_user_info(1))  

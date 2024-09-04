@@ -1,0 +1,70 @@
+class CustomDict:
+    def __init__(self, size=10):
+        self.size = size
+        self.table = [None] * size
+
+    def hash_function(self, key):
+        return sum(ord(char) for char in key) % self.size
+
+    def set(self, key, value):
+        index = self.hash_function(key)
+        original_index = index
+
+        while self.table[index] is not None and self.table[index][0] != key:
+            index = (index + 1) % self.size
+            if index == original_index:  # table is full
+                raise Exception("Hash table is full")
+
+        self.table[index] = (key, value)
+        print(f"Inserted ({key}: {value}) at index {index}")
+
+    def get(self, key):
+        index = self.hash_function(key)
+        original_index = index
+
+        while self.table[index] is not None:
+            if self.table[index][0] == key:
+                return self.table[index][1]
+            index = (index + 1) % self.size
+            if index == original_index:
+                break  # Avoid infinite loop
+
+        return None
+
+    def delete(self, key):
+        index = self.hash_function(key)
+        original_index = index
+
+        while self.table[index] is not None:
+            if self.table[index][0] == key:
+                print(f"Deleting {self.table[index]} from index {index}")
+                self.table[index] = None
+                return True
+            index = (index + 1) % self.size
+            if index == original_index:
+                break
+
+        return False
+
+
+# Test the CustomDict
+custom_dict = CustomDict()
+
+# Insert key-value pairs
+custom_dict.set("apple", 1)
+custom_dict.set("banana", 2)
+custom_dict.set("grape", 3)
+custom_dict.set("orange", 4)
+custom_dict.set("melon", 5)
+
+# Retrieve a value
+print(f"Value for 'banana': {custom_dict.get('banana')}")
+
+# Handle collision by inserting another key
+custom_dict.set("lemon", 6)
+
+# Delete a key
+custom_dict.delete("grape")
+
+# Try to retrieve deleted key
+print(f"Value for 'grape' after deletion: {custom_dict.get('grape')}")
